@@ -17,18 +17,6 @@ async function getWeatherData(input) {
     }
 }
 
-// async function getForecastData(input) {
-//     try {
-//         const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=2131437186b046c39d7223234240802&q=${input}&days=3&aqi=no&alerts=no
-//         `, {mode: 'cors'})
-//         const getData = await response.json();
-//         console.log(getData);
-//         return getData;
-//     } catch(error) {
-//         console.log(error);
-//     }
-// }
-
 function getTodayCondition(data) {
     let todayCondition = {
         feelsLikeC: data.current.feelslike_c,
@@ -56,8 +44,25 @@ function getLocation(data) {
 function getForecast(data) {
     let myForecast = {
         dayOne: {
-            highTemp: data.forecast[0],
+            // test: data.forecast.forecastday[0],
+            highTemp: data.forecast.forecastday[0].day.maxtemp_c,
+            lowTemp: data.forecast.forecastday[0].day.mintemp_c,
+            conditionText: data.forecast.forecastday[0].day.condition.text,
+            conditionIcon: data.forecast.forecastday[0].day.condition.icon,
+        },
+        dayTwo: {
+            highTemp: data.forecast.forecastday[1].day.maxtemp_c,
+            lowTemp: data.forecast.forecastday[1].day.mintemp_c,
+            conditionText: data.forecast.forecastday[1].day.condition.text,
+            conditionIcon: data.forecast.forecastday[1].day.condition.icon,
+        },
+        dayThree: {
+            highTemp: data.forecast.forecastday[2].day.maxtemp_c,
+            lowTemp: data.forecast.forecastday[2].day.mintemp_c,
+            conditionText: data.forecast.forecastday[2].day.condition.text,
+            conditionIcon: data.forecast.forecastday[2].day.condition.icon,
         }
+
     }
 
     console.log(myForecast);
