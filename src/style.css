@@ -181,7 +181,6 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 400px;
-  border: 1px solid black;
   gap: 0.8em;
 }
 
@@ -207,8 +206,16 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   width: 20em;
-  height: 10em;
+  height: 15em;
   border-radius: 2em;
+  gap: 0.8em;
+}
+
+p[class*="avg"] {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 2em;
 }

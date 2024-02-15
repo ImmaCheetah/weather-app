@@ -1,9 +1,10 @@
 import "./style.css";
+import {format} from "date-fns";
 
 async function getWeatherData(input) {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=2131437186b046c39d7223234240802&q=${input}&days=3&aqi=no&alerts=no`,
+      `http://api.weatherapi.com/v1/forecast.json?key=2131437186b046c39d7223234240802&q=${input}&days=4&aqi=no&alerts=no`,
       { mode: "cors" },
     );
     const getData = await response.json();
@@ -52,23 +53,29 @@ function getLocation(data) {
 function getForecast(data) {
   let myForecast = {
     dayOne: {
-      test: data.forecast.forecastday[0],
-      highTemp: data.forecast.forecastday[0].day.maxtemp_c,
-      lowTemp: data.forecast.forecastday[0].day.mintemp_c,
-      conditionText: data.forecast.forecastday[0].day.condition.text,
-      conditionIcon: data.forecast.forecastday[0].day.condition.icon,
-    },
-    dayTwo: {
+      test: data.forecast.forecastday[1],
+      date: data.forecast.forecastday[1].date,
       highTemp: data.forecast.forecastday[1].day.maxtemp_c,
       lowTemp: data.forecast.forecastday[1].day.mintemp_c,
+      avgTemp: data.forecast.forecastday[1].day.avgtemp_c,
       conditionText: data.forecast.forecastday[1].day.condition.text,
       conditionIcon: data.forecast.forecastday[1].day.condition.icon,
     },
-    dayThree: {
+    dayTwo: {
+      date: data.forecast.forecastday[2].date,
       highTemp: data.forecast.forecastday[2].day.maxtemp_c,
       lowTemp: data.forecast.forecastday[2].day.mintemp_c,
+      avgTemp: data.forecast.forecastday[2].day.avgtemp_c,
       conditionText: data.forecast.forecastday[2].day.condition.text,
       conditionIcon: data.forecast.forecastday[2].day.condition.icon,
+    },
+    dayThree: {
+      date: data.forecast.forecastday[3].date,
+      highTemp: data.forecast.forecastday[3].day.maxtemp_c,
+      lowTemp: data.forecast.forecastday[3].day.mintemp_c,
+      avgTemp: data.forecast.forecastday[3].day.avgtemp_c,
+      conditionText: data.forecast.forecastday[3].day.condition.text,
+      conditionIcon: data.forecast.forecastday[3].day.condition.icon,
     },
   };
 
@@ -101,7 +108,7 @@ async function displayToday(input) {
     const feelsLikeText = document.querySelector(".feels-like");
 
     locationText.textContent = `${location.name}, ${location.country}`;
-    tempText.textContent = `${condition.tempC}° degrees`;
+    tempText.textContent = `${condition.tempC} C`;
     conditionIcon.src = condition.conditionIcon;
     conditionText.textContent = `${condition.conditionText}`;
     feelsLikeText.textContent = `Feels like ${condition.feelsLikeC}`;
@@ -119,11 +126,18 @@ async function displayDayOne(input) {
     const conditionIcon = document.querySelector(".condition-one-icon");
     const highTemp = document.querySelector(".high-temp-one");
     const lowTemp = document.querySelector(".low-temp-one");
+    const avgTemp = document.querySelector(".avg-temp-one");
+    const dayName = document.querySelector(".day-one-name");
 
+    let tempDay = forecast.dayOne.date;
+    console.log(tempDay);
+
+    dayName.textContent = format(new Date(tempDay), "EEEE");
     conditionIcon.src = forecast.dayOne.conditionIcon;
     conditionText.textContent = forecast.dayOne.conditionText;
     highTemp.textContent = `Hi: ${forecast.dayOne.highTemp}`;
     lowTemp.textContent = `Lo: ${forecast.dayOne.lowTemp}`;
+    avgTemp.textContent = `${forecast.dayOne.avgTemp} C`;
   } catch (error) {
     console.log(error);
     searchError();
@@ -138,11 +152,18 @@ async function displayDayTwo(input) {
     const conditionIcon = document.querySelector(".condition-two-icon");
     const highTemp = document.querySelector(".high-temp-two");
     const lowTemp = document.querySelector(".low-temp-two");
+    const avgTemp = document.querySelector(".avg-temp-two");
+    const dayName = document.querySelector(".day-two-name");
 
+    let tempDay = forecast.dayTwo.date;
+    console.log(tempDay);
+
+    dayName.textContent = format(new Date(tempDay), "EEEE");
     conditionIcon.src = forecast.dayTwo.conditionIcon;
     conditionText.textContent = forecast.dayTwo.conditionText;
     highTemp.textContent = `Hi: ${forecast.dayTwo.highTemp}`;
     lowTemp.textContent = `Lo: ${forecast.dayTwo.lowTemp}`;
+    avgTemp.textContent = `${forecast.dayTwo.avgTemp} C`;
   } catch (error) {
     console.log(error);
     searchError();
@@ -157,11 +178,18 @@ async function displayDayThree(input) {
     const conditionIcon = document.querySelector(".condition-three-icon");
     const highTemp = document.querySelector(".high-temp-three");
     const lowTemp = document.querySelector(".low-temp-three");
+    const avgTemp = document.querySelector(".avg-temp-three");
+    const dayName = document.querySelector(".day-three-name");
 
+    let tempDay = forecast.dayThree.date;
+    console.log(tempDay);
+
+    dayName.textContent = format(new Date(tempDay), "EEEE");
     conditionIcon.src = forecast.dayThree.conditionIcon;
     conditionText.textContent = forecast.dayThree.conditionText;
     highTemp.textContent = `Hi: ${forecast.dayThree.highTemp}`;
     lowTemp.textContent = `Lo: ${forecast.dayThree.lowTemp}`;
+    avgTemp.textContent = `${forecast.dayThree.avgTemp} C`;
   } catch (error) {
     console.log(error);
     searchError();
