@@ -2,7 +2,8 @@ import "./style.css";
 
 async function getWeatherData(input) {
     try {
-        const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=2131437186b046c39d7223234240802&q=${input}&aqi=no`, {mode: 'cors'})
+        const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=2131437186b046c39d7223234240802&q=${input}&days=3&aqi=no&alerts=no
+        `, {mode: 'cors'})
         const getData = await response.json();
 
         // getTodayCondition(getData);
@@ -15,6 +16,18 @@ async function getWeatherData(input) {
         console.log(error);
     }
 }
+
+// async function getForecastData(input) {
+//     try {
+//         const response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=2131437186b046c39d7223234240802&q=${input}&days=3&aqi=no&alerts=no
+//         `, {mode: 'cors'})
+//         const getData = await response.json();
+//         console.log(getData);
+//         return getData;
+//     } catch(error) {
+//         console.log(error);
+//     }
+// }
 
 function getTodayCondition(data) {
     let todayCondition = {
@@ -40,6 +53,17 @@ function getLocation(data) {
     return myLocation;
 }
 
+function getForecast(data) {
+    let myForecast = {
+        dayOne: {
+            highTemp: data.forecast[0],
+        }
+    }
+
+    console.log(myForecast);
+    return myForecast;
+}
+
 async function displayData(input) {
     const content = document.getElementById('content');
     const weatherData = await getWeatherData(input);
@@ -56,8 +80,7 @@ const searchBtn = document.querySelector('.search-btn');
 
 searchBtn.addEventListener('click', (e)=>{
     e.preventDefault();
-    // console.log();
-    // getWeatherData();
+
     // displayData(searchField.value.toString());
     displayToday(searchField.value.toString());
 })
@@ -76,16 +99,8 @@ async function displayToday(input) {
     tempText.textContent = `${condition.tempC}° degrees`;
     conditionText.textContent = `${condition.conditionText}`;
     feelsLikeText.textContent = `Feels like ${condition.feelsLikeC}`;
+
+    getForecast(weatherData);
 }
 
-// getWeatherData('toronto');
-
-
-// data needed
-// 3 day forecast
-// week day
-// temperature
-// weather description
-// humidity
-// city and country name
 
