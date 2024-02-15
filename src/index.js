@@ -48,7 +48,7 @@ async function displayData(input) {
     const condition = await getTodayCondition(weatherData);
     
     console.log(location.country);
-    content.textContent = `This is in ${location.country}, and the weather be ${condition.conditionText}`;
+    // content.textContent = `This is in ${location.country}, and the weather be ${condition.conditionText}`;
 }
 
 const searchField = document.querySelector('.search-field');
@@ -58,9 +58,25 @@ searchBtn.addEventListener('click', (e)=>{
     e.preventDefault();
     // console.log();
     // getWeatherData();
-    displayData(searchField.value.toString());
+    // displayData(searchField.value.toString());
+    displayToday(searchField.value.toString());
 })
 
+async function displayToday(input) {
+    const weatherData = await getWeatherData(input);
+    const location = getLocation(weatherData);
+    const condition = getTodayCondition(weatherData);
+    const locationText = document.querySelector('.location');
+    const tempText = document.querySelector('.temp');
+    const conditionText = document.querySelector('.condition');
+    const feelsLikeText = document.querySelector('.feels-like');
+
+
+    locationText.textContent = `${location.name}, ${location.country}`;
+    tempText.textContent = `${condition.tempC}° degrees`;
+    conditionText.textContent = `${condition.conditionText}`;
+    feelsLikeText.textContent = `Feels like ${condition.feelsLikeC}`;
+}
 
 // getWeatherData('toronto');
 
