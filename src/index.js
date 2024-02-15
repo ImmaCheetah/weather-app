@@ -52,7 +52,7 @@ function getLocation(data) {
 function getForecast(data) {
   let myForecast = {
     dayOne: {
-      // test: data.forecast.forecastday[0],
+      test: data.forecast.forecastday[0],
       highTemp: data.forecast.forecastday[0].day.maxtemp_c,
       lowTemp: data.forecast.forecastday[0].day.mintemp_c,
       conditionText: data.forecast.forecastday[0].day.condition.text,
