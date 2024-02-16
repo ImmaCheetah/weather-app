@@ -145,10 +145,25 @@ img {
   width: 4em;
 }
 
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 h1 {
   font-size: 3em;
   font-weight: 600;
   padding: 0.5em;
+}
+
+.toggle {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 2em;
+  height: 2em;
+  /* padding: 0.3em 0.8em; */
 }
 
 .container {

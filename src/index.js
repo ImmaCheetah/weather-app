@@ -1,6 +1,6 @@
 import "./style.css";
 
-import { displayToday, displayForecast } from "./dom.js";
+import { displayToday, displayForecast, toggleTemp, clearDisplay } from "./dom.js";
 
 async function getWeatherData(input) {
   try {
@@ -10,13 +10,10 @@ async function getWeatherData(input) {
     );
     const getData = await response.json();
 
-    console.log(getData);
     return getData;
 
-    // do everything here
   } catch (error) {
     console.log(error);
-    searchError();
   }
 }
 
@@ -32,12 +29,13 @@ function getTodayCondition(data) {
   let todayCondition = {
     feelsLikeC: data.current.feelslike_c,
     tempC: data.current.temp_c,
+    feelsLikeF: data.current.feelslike_f,
+    tempF: data.current.temp_f,
     humidity: data.current.humidity,
     conditionText: data.current.condition.text,
     conditionIcon: data.current.condition.icon,
   };
 
-  console.log(todayCondition);
   return todayCondition;
 }
 
@@ -48,7 +46,6 @@ function getLocation(data) {
     localTime: data.location.localtime,
   };
 
-  console.log(myLocation);
   return myLocation;
 }
 
@@ -57,32 +54,42 @@ function getForecast(data, dayNumber) {
     day: {
       test: data.forecast.forecastday[dayNumber],
       date: data.forecast.forecastday[dayNumber].date,
-      highTemp: data.forecast.forecastday[dayNumber].day.maxtemp_c,
-      lowTemp: data.forecast.forecastday[dayNumber].day.mintemp_c,
-      avgTemp: data.forecast.forecastday[dayNumber].day.avgtemp_c,
+      highTempC: data.forecast.forecastday[dayNumber].day.maxtemp_c,
+      lowTempC: data.forecast.forecastday[dayNumber].day.mintemp_c,
+      avgTempC: data.forecast.forecastday[dayNumber].day.avgtemp_c,
+      highTempF: data.forecast.forecastday[dayNumber].day.maxtemp_f,
+      lowTempF: data.forecast.forecastday[dayNumber].day.mintemp_f,
+      avgTempF: data.forecast.forecastday[dayNumber].day.avgtemp_f,
       conditionText: data.forecast.forecastday[dayNumber].day.condition.text,
       conditionIcon: data.forecast.forecastday[dayNumber].day.condition.icon,
     },
   };
 
-  console.log(myForecast);
   return myForecast;
 }
 
 const searchField = document.querySelector(".search-field");
 const searchBtn = document.querySelector(".search-btn");
+const toggleBtn = document.querySelector(".toggle");
 const form = document.getElementById("main-form");
 
 form.addEventListener("submit", (e) => {
   if (!form.checkValidity()) {
     searchError();
   } else {
-    console.log("oi");
+    clearDisplay();
     displayToday(searchField.value.toString());
     displayForecast(searchField.value.toString());
   }
   e.preventDefault();
 });
+
+toggleBtn.addEventListener("click", (e) => {
+  toggleTemp();
+  clearDisplay();
+  displayToday(searchField.value.toString());
+  displayForecast(searchField.value.toString());
+})
 
 // searchBtn.addEventListener("click", (e) => {
 //   e.preventDefault();

@@ -7,6 +7,9 @@ import {
   searchError,
 } from "./index.js";
 
+let i = 0;
+let celsius = true;
+
 async function displayToday(input) {
   try {
     const weatherData = await getWeatherData(input);
@@ -19,23 +22,31 @@ async function displayToday(input) {
     const feelsLikeText = document.querySelector(".feels-like");
 
     locationText.textContent = `${location.name}, ${location.country}`;
-    tempText.textContent = `${condition.tempC} C`;
     conditionIcon.src = condition.conditionIcon;
     conditionText.textContent = `${condition.conditionText}`;
-    feelsLikeText.textContent = `Feels like ${condition.feelsLikeC}`;
+
+    if (celsius) {
+        tempText.textContent = `${condition.tempC} °C`;
+        feelsLikeText.textContent = `Feels like ${condition.feelsLikeC} °C`;
+    } else {
+        tempText.textContent = `${condition.tempF} °F`;
+        feelsLikeText.textContent = `Feels like ${condition.feelsLikeF} °F`;
+    }
+
   } catch (error) {
     console.log(error);
     searchError();
   }
 }
 
-let i = 0;
+
 async function displayForecast(input) {
   try {
     const weatherData = await getWeatherData(input);
     const forecastDiv = document.querySelectorAll(".day-div");
 
     forecastDiv.forEach((div) => {
+      console.log(i);
       const forecast = getForecast(weatherData, ++i);
       const conditionDiv = document.createElement("div");
       const conditionText = document.createElement("p");
@@ -59,12 +70,21 @@ async function displayForecast(input) {
         new Date(tempDay.replace(/-/g, "/")),
         "EEEE",
       );
+    
+
       conditionText.textContent = forecast.day.conditionText;
-      console.log(conditionText);
       conditionIcon.src = forecast.day.conditionIcon;
-      highTemp.textContent = `Hi: ${forecast.day.highTemp}`;
-      lowTemp.textContent = `Lo: ${forecast.day.lowTemp}`;
-      avgTemp.textContent = `${forecast.day.avgTemp} C`;
+      
+
+      if (celsius) {
+        highTemp.textContent = `Hi: ${forecast.day.highTempC} °C`;
+        lowTemp.textContent = `Lo: ${forecast.day.lowTempC} °C`;
+        avgTemp.textContent = `${forecast.day.avgTempC} °C`;
+      } else {
+        highTemp.textContent = `Hi: ${forecast.day.highTempF} °F`;
+        lowTemp.textContent = `Lo: ${forecast.day.lowTempF} °F`;
+        avgTemp.textContent = `${forecast.day.avgTempF} °F`;
+      }
 
       conditionDiv.appendChild(conditionIcon);
       conditionDiv.appendChild(conditionText);
@@ -74,10 +94,29 @@ async function displayForecast(input) {
       div.appendChild(highTemp);
       div.appendChild(lowTemp);
     });
+    i = 0;
   } catch (error) {
     console.log("forecast error", error);
     searchError();
   }
 }
 
-export { displayToday, displayForecast };
+function toggleTemp() {
+    if (celsius) {
+        celsius = false;
+    } else {
+        celsius = true;
+    }
+}
+
+function clearDisplay() {
+    const todayDiv = document.querySelector('.today-div');
+    const dayDiv = document.querySelectorAll('.day-div');
+
+    // todayDiv.textContent = '';
+    dayDiv.forEach((div) => {
+        div.textContent = '';
+    })
+}
+
+export { displayToday, displayForecast, toggleTemp, clearDisplay };
