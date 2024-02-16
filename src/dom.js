@@ -3,7 +3,8 @@ import {
     getWeatherData,
     getForecast,
     getLocation,
-    getTodayCondition
+    getTodayCondition,
+    searchError
 } from "./index.js";
 
 async function displayToday(input) {
@@ -26,6 +27,26 @@ async function displayToday(input) {
     console.log(error);
     searchError();
   }
+}
+
+async function displayForecast(input) {
+    const weatherData = await getWeatherData(input);
+    const forecastDiv = document.querySelectorAll('.test');
+    
+    let i = 1;
+    
+    forecastDiv.forEach(()=> {
+        const forecast = getForecast(weatherData, i);
+        const conditionText = document.createElement('p');
+        const conditionIcon = document.createElement('img')
+        const highTemp = document.createElement('p');
+        const lowTemp = document.createElement('p');
+
+        conditionText.textContent = forecast.day.conditionText;
+        console.log(conditionText);
+        conditionIcon.src = forecast.day.conditionIcon;
+    })
+    
 }
 
 async function displayDayOne(input) {
@@ -110,5 +131,6 @@ export {
     displayDayOne,
     displayDayTwo,
     displayDayThree,
-    displayToday
+    displayToday,
+    displayForecast
 }

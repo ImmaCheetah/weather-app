@@ -4,7 +4,8 @@ import {
   displayDayOne,
   displayDayTwo,
   displayDayThree,
-  displayToday
+  displayToday,
+  displayForecast,
 } from "./dom.js";
 
 
@@ -58,32 +59,16 @@ function getLocation(data) {
   return myLocation;
 }
 
-function getForecast(data) {
+function getForecast(data, dayNumber) {
   let myForecast = {
-    dayOne: {
-      test: data.forecast.forecastday[1],
-      date: data.forecast.forecastday[1].date,
-      highTemp: data.forecast.forecastday[1].day.maxtemp_c,
-      lowTemp: data.forecast.forecastday[1].day.mintemp_c,
-      avgTemp: data.forecast.forecastday[1].day.avgtemp_c,
-      conditionText: data.forecast.forecastday[1].day.condition.text,
-      conditionIcon: data.forecast.forecastday[1].day.condition.icon,
-    },
-    dayTwo: {
-      date: data.forecast.forecastday[2].date,
-      highTemp: data.forecast.forecastday[2].day.maxtemp_c,
-      lowTemp: data.forecast.forecastday[2].day.mintemp_c,
-      avgTemp: data.forecast.forecastday[2].day.avgtemp_c,
-      conditionText: data.forecast.forecastday[2].day.condition.text,
-      conditionIcon: data.forecast.forecastday[2].day.condition.icon,
-    },
-    dayThree: {
-      date: data.forecast.forecastday[3].date,
-      highTemp: data.forecast.forecastday[3].day.maxtemp_c,
-      lowTemp: data.forecast.forecastday[3].day.mintemp_c,
-      avgTemp: data.forecast.forecastday[3].day.avgtemp_c,
-      conditionText: data.forecast.forecastday[3].day.condition.text,
-      conditionIcon: data.forecast.forecastday[3].day.condition.icon,
+    day: {
+      test: data.forecast.forecastday[dayNumber],
+      date: data.forecast.forecastday[dayNumber].date,
+      highTemp: data.forecast.forecastday[dayNumber].day.maxtemp_c,
+      lowTemp: data.forecast.forecastday[dayNumber].day.mintemp_c,
+      avgTemp: data.forecast.forecastday[dayNumber].day.avgtemp_c,
+      conditionText: data.forecast.forecastday[dayNumber].day.condition.text,
+      conditionIcon: data.forecast.forecastday[dayNumber].day.condition.icon,
     },
   };
 
@@ -91,24 +76,37 @@ function getForecast(data) {
   return myForecast;
 }
 
-let unit = true;
-
 const searchField = document.querySelector(".search-field");
 const searchBtn = document.querySelector(".search-btn");
+const form = document.getElementById("main-form");
 
-searchBtn.addEventListener("click", (e) => {
+form.addEventListener("submit", (e) => {
+  if (!form.checkValidity()) {
+    searchError()
+  } else {
+    console.log('oi');
+    displayToday(searchField.value.toString());
+    displayDayOne(searchField.value.toString());
+    displayDayTwo(searchField.value.toString());
+    displayDayThree(searchField.value.toString());
+    displayForecast(searchField.value.toString());
+  }
   e.preventDefault();
-
-  // displayData(searchField.value.toString());
-  displayToday(searchField.value.toString());
-  displayDayOne(searchField.value.toString());
-  displayDayTwo(searchField.value.toString());
-  displayDayThree(searchField.value.toString());
 });
+
+// searchBtn.addEventListener("click", (e) => {
+//   e.preventDefault();
+
+//   displayToday(searchField.value.toString());
+//   displayDayOne(searchField.value.toString());
+//   displayDayTwo(searchField.value.toString());
+//   displayDayThree(searchField.value.toString());
+// });
 
 export {
   getWeatherData,
   getForecast,
   getLocation,
-  getTodayCondition
+  getTodayCondition,
+  searchError
 }
