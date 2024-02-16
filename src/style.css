@@ -124,15 +124,21 @@ table {
   border-spacing: 0;
 }
 
-
-
 body {
   font-family: "Fredoka", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  background: rgb(182,250,246);
-  background: linear-gradient(90deg, rgba(182,250,246,1) 0%, rgba(9,9,121,1) 0%, rgba(176,105,40,1) 0%, rgba(187,112,34,1) 0%, rgba(172,247,245,1) 0%, rgba(255,171,0,1) 100%);
+  background: rgb(182, 250, 246);
+  background: linear-gradient(
+    90deg,
+    rgba(182, 250, 246, 1) 0%,
+    rgba(9, 9, 121, 1) 0%,
+    rgba(176, 105, 40, 1) 0%,
+    rgba(187, 112, 34, 1) 0%,
+    rgba(172, 247, 245, 1) 0%,
+    rgba(255, 171, 0, 1) 100%
+  );
 }
 
 img {
@@ -144,7 +150,6 @@ h1 {
   font-weight: 600;
   padding: 0.5em;
 }
-
 
 .container {
   display: flex;
@@ -158,7 +163,6 @@ h1 {
   justify-content: center;
   width: 400px;
   padding: 1em;
-  
 }
 
 .search-field {
