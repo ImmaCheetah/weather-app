@@ -42,7 +42,7 @@ async function displayDayOne(input) {
     let tempDay = forecast.dayOne.date;
     console.log(tempDay);
 
-    dayName.textContent = format(new Date(tempDay), "EEEE");
+    dayName.textContent = format(new Date(tempDay.replace(/-/g, '\/')), "EEEE");
     conditionIcon.src = forecast.dayOne.conditionIcon;
     conditionText.textContent = forecast.dayOne.conditionText;
     highTemp.textContent = `Hi: ${forecast.dayOne.highTemp}`;
@@ -68,7 +68,7 @@ async function displayDayTwo(input) {
     let tempDay = forecast.dayTwo.date;
     console.log(tempDay);
 
-    dayName.textContent = format(new Date(tempDay), "EEEE");
+    dayName.textContent = format(new Date(tempDay.replace(/-/g, '\/')), "EEEE");
     conditionIcon.src = forecast.dayTwo.conditionIcon;
     conditionText.textContent = forecast.dayTwo.conditionText;
     highTemp.textContent = `Hi: ${forecast.dayTwo.highTemp}`;
@@ -94,7 +94,7 @@ async function displayDayThree(input) {
     let tempDay = forecast.dayThree.date;
     console.log(tempDay);
 
-    dayName.textContent = format(new Date(tempDay), "EEEE");
+    dayName.textContent = format(new Date(tempDay.replace(/-/g, '\/')), "EEEE");
     conditionIcon.src = forecast.dayThree.conditionIcon;
     conditionText.textContent = forecast.dayThree.conditionText;
     highTemp.textContent = `Hi: ${forecast.dayThree.highTemp}`;
