@@ -1,10 +1,10 @@
 import { format } from "date-fns";
 import {
-    getWeatherData,
-    getForecast,
-    getLocation,
-    getTodayCondition,
-    searchError
+  getWeatherData,
+  getForecast,
+  getLocation,
+  getTodayCondition,
+  searchError,
 } from "./index.js";
 
 async function displayToday(input) {
@@ -29,108 +29,55 @@ async function displayToday(input) {
   }
 }
 
+let i = 0;
 async function displayForecast(input) {
-    const weatherData = await getWeatherData(input);
-    const forecastDiv = document.querySelectorAll('.test');
-    
-    let i = 1;
-    
-    forecastDiv.forEach(()=> {
-        const forecast = getForecast(weatherData, i);
-        const conditionText = document.createElement('p');
-        const conditionIcon = document.createElement('img')
-        const highTemp = document.createElement('p');
-        const lowTemp = document.createElement('p');
-
-        conditionText.textContent = forecast.day.conditionText;
-        console.log(conditionText);
-        conditionIcon.src = forecast.day.conditionIcon;
-    })
-    
-}
-
-async function displayDayOne(input) {
   try {
     const weatherData = await getWeatherData(input);
-    const forecast = getForecast(weatherData);
-    const conditionText = document.querySelector(".condition-one-text");
-    const conditionIcon = document.querySelector(".condition-one-icon");
-    const highTemp = document.querySelector(".high-temp-one");
-    const lowTemp = document.querySelector(".low-temp-one");
-    const avgTemp = document.querySelector(".avg-temp-one");
-    const dayName = document.querySelector(".day-one-name");
+    const forecastDiv = document.querySelectorAll(".day-div");
 
-    let tempDay = forecast.dayOne.date;
-    console.log(tempDay);
+    forecastDiv.forEach((div) => {
+      const forecast = getForecast(weatherData, ++i);
+      const conditionDiv = document.createElement("div");
+      const conditionText = document.createElement("p");
+      const conditionIcon = document.createElement("img");
+      const highTemp = document.createElement("p");
+      const lowTemp = document.createElement("p");
+      const avgTemp = document.createElement("p");
+      const dayName = document.createElement("h2");
 
-    dayName.textContent = format(new Date(tempDay), "EEEE");
-    conditionIcon.src = forecast.dayOne.conditionIcon;
-    conditionText.textContent = forecast.dayOne.conditionText;
-    highTemp.textContent = `Hi: ${forecast.dayOne.highTemp}`;
-    lowTemp.textContent = `Lo: ${forecast.dayOne.lowTemp}`;
-    avgTemp.textContent = `${forecast.dayOne.avgTemp} C`;
+      let tempDay = forecast.day.date;
+
+      conditionDiv.classList.add("condition-div");
+      conditionText.classList.add("condition-text");
+      conditionIcon.classList.add("condition-icon");
+      highTemp.classList.add("high-temp");
+      lowTemp.classList.add("low-temp");
+      avgTemp.classList.add("avg-temp");
+      dayName.classList.add("day-name");
+
+      dayName.textContent = format(
+        new Date(tempDay.replace(/-/g, "/")),
+        "EEEE",
+      );
+      conditionText.textContent = forecast.day.conditionText;
+      console.log(conditionText);
+      conditionIcon.src = forecast.day.conditionIcon;
+      highTemp.textContent = `Hi: ${forecast.day.highTemp}`;
+      lowTemp.textContent = `Lo: ${forecast.day.lowTemp}`;
+      avgTemp.textContent = `${forecast.day.avgTemp} C`;
+
+      conditionDiv.appendChild(conditionIcon);
+      conditionDiv.appendChild(conditionText);
+      div.appendChild(dayName);
+      div.appendChild(conditionDiv);
+      div.appendChild(avgTemp);
+      div.appendChild(highTemp);
+      div.appendChild(lowTemp);
+    });
   } catch (error) {
-    console.log(error);
+    console.log("forecast error", error);
     searchError();
   }
 }
 
-async function displayDayTwo(input) {
-  try {
-    const weatherData = await getWeatherData(input);
-    const forecast = getForecast(weatherData);
-    const conditionText = document.querySelector(".condition-two-text");
-    const conditionIcon = document.querySelector(".condition-two-icon");
-    const highTemp = document.querySelector(".high-temp-two");
-    const lowTemp = document.querySelector(".low-temp-two");
-    const avgTemp = document.querySelector(".avg-temp-two");
-    const dayName = document.querySelector(".day-two-name");
-
-    let tempDay = forecast.dayTwo.date;
-    console.log(tempDay);
-
-    dayName.textContent = format(new Date(tempDay), "EEEE");
-    conditionIcon.src = forecast.dayTwo.conditionIcon;
-    conditionText.textContent = forecast.dayTwo.conditionText;
-    highTemp.textContent = `Hi: ${forecast.dayTwo.highTemp}`;
-    lowTemp.textContent = `Lo: ${forecast.dayTwo.lowTemp}`;
-    avgTemp.textContent = `${forecast.dayTwo.avgTemp} C`;
-  } catch (error) {
-    console.log(error);
-    searchError();
-  }
-}
-
-async function displayDayThree(input) {
-  try {
-    const weatherData = await getWeatherData(input);
-    const forecast = getForecast(weatherData);
-    const conditionText = document.querySelector(".condition-three-text");
-    const conditionIcon = document.querySelector(".condition-three-icon");
-    const highTemp = document.querySelector(".high-temp-three");
-    const lowTemp = document.querySelector(".low-temp-three");
-    const avgTemp = document.querySelector(".avg-temp-three");
-    const dayName = document.querySelector(".day-three-name");
-
-    let tempDay = forecast.dayThree.date;
-    console.log(tempDay);
-
-    dayName.textContent = format(new Date(tempDay), "EEEE");
-    conditionIcon.src = forecast.dayThree.conditionIcon;
-    conditionText.textContent = forecast.dayThree.conditionText;
-    highTemp.textContent = `Hi: ${forecast.dayThree.highTemp}`;
-    lowTemp.textContent = `Lo: ${forecast.dayThree.lowTemp}`;
-    avgTemp.textContent = `${forecast.dayThree.avgTemp} C`;
-  } catch (error) {
-    console.log(error);
-    searchError();
-  }
-}
-
-export {
-    displayDayOne,
-    displayDayTwo,
-    displayDayThree,
-    displayToday,
-    displayForecast
-}
+export { displayToday, displayForecast };

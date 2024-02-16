@@ -206,7 +206,7 @@ h1 {
   display: flex;
 }
 
-.day {
+.day-div {
   display: flex;
   flex-direction: column;
   justify-content: center;

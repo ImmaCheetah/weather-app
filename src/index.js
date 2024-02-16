@@ -1,13 +1,6 @@
 import "./style.css";
 
-import {
-  displayDayOne,
-  displayDayTwo,
-  displayDayThree,
-  displayToday,
-  displayForecast,
-} from "./dom.js";
-
+import { displayToday, displayForecast } from "./dom.js";
 
 async function getWeatherData(input) {
   try {
@@ -82,13 +75,10 @@ const form = document.getElementById("main-form");
 
 form.addEventListener("submit", (e) => {
   if (!form.checkValidity()) {
-    searchError()
+    searchError();
   } else {
-    console.log('oi');
+    console.log("oi");
     displayToday(searchField.value.toString());
-    displayDayOne(searchField.value.toString());
-    displayDayTwo(searchField.value.toString());
-    displayDayThree(searchField.value.toString());
     displayForecast(searchField.value.toString());
   }
   e.preventDefault();
@@ -108,5 +98,5 @@ export {
   getForecast,
   getLocation,
   getTodayCondition,
-  searchError
-}
+  searchError,
+};
