@@ -39,7 +39,6 @@ async function displayToday(input) {
   }
 }
 
-
 async function displayForecast(input) {
   try {
     const weatherData = await getWeatherData(input);
@@ -98,6 +97,7 @@ async function displayForecast(input) {
   } catch (error) {
     console.log("forecast error", error);
     searchError();
+    i = 0;
   }
 }
 
@@ -109,14 +109,18 @@ function toggleTemp() {
     }
 }
 
+function clearError() {
+    const errorMsg = document.querySelector('.error-msg');
+
+    errorMsg.textContent = '';
+}
+
 function clearDisplay() {
-    const todayDiv = document.querySelector('.today-div');
     const dayDiv = document.querySelectorAll('.day-div');
 
-    // todayDiv.textContent = '';
     dayDiv.forEach((div) => {
         div.textContent = '';
     })
 }
 
-export { displayToday, displayForecast, toggleTemp, clearDisplay };
+export { displayToday, displayForecast, toggleTemp, clearDisplay, clearError };

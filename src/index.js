@@ -1,6 +1,6 @@
 import "./style.css";
 
-import { displayToday, displayForecast, toggleTemp, clearDisplay } from "./dom.js";
+import { displayToday, displayForecast, toggleTemp, clearDisplay, clearError } from "./dom.js";
 
 async function getWeatherData(input) {
   try {
@@ -18,11 +18,9 @@ async function getWeatherData(input) {
 }
 
 function searchError() {
-  const searchDiv = document.querySelector(".search-div");
-  const message = document.createElement("p");
+  const message = document.querySelector('.error-msg')
 
-  message.textContent = "Something went wrong";
-  searchDiv.appendChild(message);
+  message.textContent = "Can't find that city";
 }
 
 function getTodayCondition(data) {
@@ -69,7 +67,6 @@ function getForecast(data, dayNumber) {
 }
 
 const searchField = document.querySelector(".search-field");
-const searchBtn = document.querySelector(".search-btn");
 const toggleBtn = document.querySelector(".toggle");
 const form = document.getElementById("main-form");
 
@@ -77,6 +74,7 @@ form.addEventListener("submit", (e) => {
   if (!form.checkValidity()) {
     searchError();
   } else {
+    clearError();
     clearDisplay();
     displayToday(searchField.value.toString());
     displayForecast(searchField.value.toString());
@@ -87,18 +85,10 @@ form.addEventListener("submit", (e) => {
 toggleBtn.addEventListener("click", (e) => {
   toggleTemp();
   clearDisplay();
+  clearError();
   displayToday(searchField.value.toString());
   displayForecast(searchField.value.toString());
 })
-
-// searchBtn.addEventListener("click", (e) => {
-//   e.preventDefault();
-
-//   displayToday(searchField.value.toString());
-//   displayDayOne(searchField.value.toString());
-//   displayDayTwo(searchField.value.toString());
-//   displayDayThree(searchField.value.toString());
-// });
 
 export {
   getWeatherData,
