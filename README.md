@@ -1,6 +1,6 @@
 # project-name
 
-> [Live Website](https://immacheetah.github.io/propject-name/)
+> [Live Website](https://immacheetah.github.io/weather-app/)
 
 ## Preview
 
