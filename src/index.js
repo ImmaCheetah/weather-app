@@ -5,7 +5,7 @@ import { displayToday, displayForecast, toggleTemp, clearDisplay, clearError } f
 async function getWeatherData(input) {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=2131437186b046c39d7223234240802&q=${input}&days=4&aqi=no&alerts=no`,
+      `https://api.weatherapi.com/v1/forecast.json?key=2131437186b046c39d7223234240802&q=${input}&days=4&aqi=no&alerts=no`,
       { mode: "cors" },
     );
     const getData = await response.json();
