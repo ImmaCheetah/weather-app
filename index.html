@@ -2,12 +2,44 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Output Management</title>
+    <title>WTW</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script defer src="runtime.bundle.js"></script>
-    <script defer src="main.bundle.js"></script>
-  </head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@95.3,300..700&display=swap"
+      rel="stylesheet"
+    />
+  <script defer src="runtime.bundle.js"></script><script defer src="main.bundle.js"></script></head>
   <body>
-    <div class="container"></div>
+    <div class="container">
+      <div class="header">
+        <h1>what's the weather</h1>
+        <button class="toggle">Toggle Temp</button>
+      </div>
+      <div class="search-div">
+        <form id="main-form" action="post">
+          <input class="search-field" type="search" />
+          <button class="search-btn">Search</button>
+        </form>
+      </div>
+      <div class="error-div">
+        <p class="error-msg"></p>
+      </div>
+      <div class="today-div">
+        <p class="location"></p>
+        <div class="condition-div">
+          <img class="condition-icon" alt="" />
+          <p class="condition-text"></p>
+        </div>
+        <p class="temp"></p>
+        <p class="feels-like"></p>
+      </div>
+      <div class="forecast-div">
+        <div class="day-div"></div>
+        <div class="day-div"></div>
+        <div class="day-div"></div>
+      </div>
+    </div>
   </body>
 </html>
